@@ -1,5 +1,6 @@
 backend:
   name: git-gateway
+  repo: username/repository
   accept_roles:
     - admin
     - editor

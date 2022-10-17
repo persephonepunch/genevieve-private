@@ -1,0 +1,541 @@
+backend:
+  name: git-gateway
+  accept_roles:
+    - admin
+    - editor
+media_folder: theme/assets/images
+public_folder: /assets/images
+collections:
+  - name: pages
+    label: Pages
+    identifier_field: title
+    extension: md
+    create: false
+    delete: false
+    slug: '{{slug}}'
+    editor:
+      preview: false
+    folder: cms/pages
+    fields:
+      - label: Title
+        name: title
+        widget: string
+      - label: Publish Date
+        name: date
+        widget: datetime
+      - label: Layout
+        widget: hidden
+        name: layout
+        default: '{{slug}}.html'
+      - &ref_0
+        label: Seo
+        name: seo
+        widget: object
+        collapsed: true
+        fields:
+          - label: Title
+            name: title
+            widget: string
+            required: false
+          - label: Description
+            name: description
+            widget: string
+            required: false
+          - label: No index
+            name: noindex
+            widget: boolean
+            default: false
+            required: false
+          - label: Open Graph Title
+            name: og:title
+            widget: string
+            required: false
+          - label: Open Graph Image
+            name: og:image
+            widget: image
+            required: false
+            media_library:
+              config:
+                multiple: false
+          - label: Twitter Title
+            name: twitter:title
+            widget: string
+            default: summary
+            required: false
+          - label: Twitter Card
+            name: twitter:card
+            widget: string
+            default: summary
+            required: false
+          - label: Twitter Site
+            name: twitter:site
+            widget: string
+            required: false
+          - label: Twitter Creator
+            name: twitter:creator
+            widget: string
+            required: false
+          - label: Additional HTML tags
+            name: additional_tags
+            widget: text
+            required: false
+  - name: users
+    label: Users
+    folder: cms/users
+    create: true
+    identifier_field: name
+    extension: md
+    slug: '{{slug}}'
+    fields:
+      - hint: ''
+        name: title
+        label: Name
+        widget: string
+        required: true
+      - hint: ''
+        name: created-on
+        label: Created On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: updated-on
+        label: Updated On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: published-on
+        label: Published On
+        widget: datetime
+        required: false
+      - label: Project Description
+        name: body
+        widget: markdown
+        required: false
+      - hint: ''
+        name: f_email
+        label: Email
+        widget: string
+        required: false
+      - hint: ''
+        name: f_phone
+        label: Phone
+        widget: string
+        required: false
+      - hint: ''
+        name: f_reference-images
+        label: Reference Images
+        widget: list
+        required: false
+        fields:
+          - hint: ''
+            name: url
+            label: Image
+            widget: image
+            required: false
+            allow_multiple: false
+          - hint: Image Alt
+            name: alt
+            label: alt
+            widget: string
+            required: false
+      - hint: ''
+        name: f_private-invoice
+        label: Private Invoice
+        widget: string
+        required: false
+      - label: Tags
+        widget: hidden
+        name: tags
+        default: users
+      - label: Layout
+        widget: hidden
+        name: layout
+        default: '[users].html'
+      - label: Publish Date
+        name: date
+        widget: datetime
+      - *ref_0
+  - label: Theme Settings
+    name: settings
+    identifier_field: title
+    extension: json
+    create: false
+    delete: false
+    slug: '{{slug}}'
+    editor:
+      preview: false
+    files:
+      - label: General
+        name: site
+        file: cms/_data/settings/site.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: General
+          - hint: Full domain url (needed for a correct sitemap file)
+            name: domain
+            label: Domain
+            widget: string
+            required: false
+          - name: favicon
+            label: Favicon
+            widget: image
+            allow_multiple: false
+            required: false
+          - name: apple_touch_icon
+            label: Apple Touch Icon
+            widget: image
+            allow_multiple: false
+            required: false
+          - name: header_additional_content
+            label: Additional Content Header
+            hint: Content here will be placed before </head> tag
+            widget: text
+            required: false
+          - name: footer_additional_content
+            label: Additional Content Footer
+            hint: Content here will be placed before </body> tag
+            widget: text
+            required: false
+          - name: images_optimization
+            label: Images Optimization
+            widget: object
+            collapsed: false
+            fields:
+              - label: Image Formats
+                name: formats
+                widget: select
+                multiple: true
+                options:
+                  - label: Avif
+                    value: avif
+                  - label: Webp
+                    value: webp
+              - label: Image Dimensions
+                name: dimensions
+                widget: select
+                multiple: true
+                options:
+                  - label: '500'
+                    value: 500
+                  - label: '800'
+                    value: 800
+                  - label: '1080'
+                    value: 1080
+                  - label: '1600'
+                    value: 1600
+                  - label: '2000'
+                    value: 2000
+                  - label: '2600'
+                    value: 2600
+      - label: Colors
+        name: colors
+        file: cms/_data/colors.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Colors
+      - label: Texts
+        name: texts
+        file: cms/_data/texts.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Texts
+          - hint: 'Original text: Home, key: 2268ff'
+            label: Text
+            name: 2268ff
+            widget: string
+          - hint: 'Original text: Private Login, key: -48105b4'
+            label: Text
+            name: '-48105b4'
+            widget: string
+          - hint: 'Original text: Custom orders, key: 69b1de54'
+            label: Text
+            name: 69b1de54
+            widget: string
+          - hint: 'Original text: profile, key: -12717657'
+            label: Text
+            name: '-12717657'
+            widget: string
+          - hint: 'Original text: Contact, key: -64104400'
+            label: Text
+            name: '-64104400'
+            widget: string
+          - hint: 'Original text: private dashboard, key: -666893c9'
+            label: Text
+            name: '-666893c9'
+            widget: string
+          - hint: 'Original text: your invoices, key: -6a5123cd'
+            label: Text
+            name: '-6a5123cd'
+            widget: string
+          - hint: 'Original text: dashboard, key: -3e75156c'
+            label: Text
+            name: '-3e75156c'
+            widget: string
+          - hint: 'Original text: Always, key: 75147e2f'
+            label: Text
+            name: 75147e2f
+            widget: string
+          - hint: >-
+              Original text:  Our Hopeful Necklace is about hope and optimism.
+              We designed it during Covid as a totem for optimism during trying
+              times. , key: 1c29a0be
+            label: Text
+            name: 1c29a0be
+            widget: text
+          - hint: "Original text: Domestic violence increased during Covid. We teamed up with The Center for Family Justice and created this necklace to support their efforts in addressing domestic violence. \_It's shape -- the octagon signifies stopping domestic violence., key: -5e0c8452"
+            label: Text
+            name: '-5e0c8452'
+            widget: text
+          - hint: 'Original text: private invoice, key: 504cd190'
+            label: Text
+            name: 504cd190
+            widget: string
+          - hint: 'Original text: Heading, key: -6d5fea1e'
+            label: Text
+            name: '-6d5fea1e'
+            widget: string
+          - hint: 'Original text: Hopeful, key: -5b7ba95f'
+            label: Text
+            name: '-5b7ba95f'
+            widget: string
+          - hint: 'Original text: Joy, key: 123b4'
+            label: Text
+            name: 123b4
+            widget: string
+          - hint: >-
+              Original text: It's difficult to find someone who hasn't been
+              touched directly or indirectly by a mental health issue. Mental
+              health includes our emotional, psychological and social
+              well-being. It affects how we think, feel and act. We are so happy
+              there is finally more awareness out there with the struggles of
+              mental health. We want to provide a little extra JOY. For every
+              JOY necklace sold, we will donate a JOY necklace to a person
+              touched by mental health issues., key: 31ef0509
+            label: Text
+            name: 31ef0509
+            widget: text
+          - hint: |-
+              Original text: ⁠
+                , key: eb7ad2a
+            label: Text
+            name: eb7ad2a
+            widget: string
+          - hint: 'Original text: login, key: 625ef69'
+            label: Text
+            name: 625ef69
+            widget: string
+          - hint: >-
+              Original text: Please login with one time password link, key:
+              -42cb53ed
+            label: Text
+            name: '-42cb53ed'
+            widget: string
+          - hint: >-
+              Original text: Thank you! Your submission has been received!, key:
+              5a0ea5a1
+            label: Text
+            name: 5a0ea5a1
+            widget: string
+          - hint: >-
+              Original text: Oops! Something went wrong while submitting the
+              form., key: -7c112e99
+            label: Text
+            name: '-7c112e99'
+            widget: string
+          - hint: 'Original text: account, key: -462c75d3'
+            label: Text
+            name: '-462c75d3'
+            widget: string
+          - hint: 'Original text: Thank you for your order., key: -12a3601'
+            label: Text
+            name: '-12a3601'
+            widget: string
+          - hint: 'Original text: ‍, key: 200d'
+            label: Text
+            name: 200d
+            widget: string
+          - hint: 'Original text: complete purchase, key: -7b2cfbf8'
+            label: Text
+            name: '-7b2cfbf8'
+            widget: string
+          - hint: 'Original text: LOG OUT, key: 3f20b432'
+            label: Text
+            name: 3f20b432
+            widget: string
+          - hint: 'Original text: Perfect Imperfect, key: -5c29462a'
+            label: Text
+            name: '-5c29462a'
+            widget: string
+          - hint: >-
+              Original text: This beautiful meaningful piece was inspired by a
+              beautiful boy named Evan who was born with CHD (congenital heart
+              defect). Evan’s heart is imperfect yet so perfect with his love of
+              life and vibrant, warrior personality. For every heart necklace
+              sold, one is donated to a child with CHD through Evan’s Fund at
+              Boston Children’s Hospital., key: 87b15f6
+            label: Text
+            name: 87b15f6
+            widget: text
+          - hint: 'Original text: Custom locked content, key: 490ff5d2'
+            label: Text
+            name: 490ff5d2
+            widget: string
+          - hint: 'Original text: custom orders, key: 3a12ae74'
+            label: Text
+            name: 3a12ae74
+            widget: string
+          - hint: 'Original text: Email Address, key: -2b7010d0'
+            label: Text
+            name: '-2b7010d0'
+            widget: string
+          - hint: 'Original text: phone number, key: -292851c5'
+            label: Text
+            name: '-292851c5'
+            widget: string
+          - hint: 'Original text: best time to call, key: 2a696f4c'
+            label: Text
+            name: 2a696f4c
+            widget: string
+          - hint: 'Original text: customization, key: 6196a7d3'
+            label: Text
+            name: 6196a7d3
+            widget: string
+      - label: Links
+        name: links
+        file: cms/_data/links.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Links
+          - hint: 'Original link: #, key: 23'
+            label: Link
+            name: '23'
+            widget: string
+          - hint: 'Original link: /oauth/login, key: 31cb9262'
+            label: Link
+            name: 31cb9262
+            widget: string
+          - hint: 'Original link: /oauth/register, key: 172c7d0a'
+            label: Link
+            name: 172c7d0a
+            widget: string
+      - label: Images
+        name: images
+        file: cms/_data/images.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Images
+          - label: Image
+            name: 171ffbdd
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-47c6cf2f'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-32deb13e'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-567599b2'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-3ec70bfb'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-4b633cf7'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-32c2823c'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-67c0a6a3'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+publish_mode: editorial_workflow
